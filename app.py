@@ -10,5 +10,5 @@ if __name__ == "__main__":
     try:
         counter = len(Project.query.all()) 
     except Exception:
-        db.create_app()
+        db.create_all()
     app.run(port = 8083)
