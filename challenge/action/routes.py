@@ -3,6 +3,7 @@ from marshmallow import ValidationError
 from .schema import ActionSchema
 from .service import ActionService
 from challenge.project.service import ProjectService
+from challenge.models import Action
 
 
 action = Blueprint("action", __name__, url_prefix="/api")
@@ -43,7 +44,6 @@ def retrieve_project_actions(project_id):
 
 @action.route("/actions/<action_id>", methods = ["GET"])
 def get_action(action_id):
-    
     action = action_service.get(action_id)
     if action:
         res = action_schema.dump(action)
@@ -52,15 +52,46 @@ def get_action(action_id):
 
 
 @action.route("/projects/<project_id>/actions/<action_id>", methods = ["GET"])
-def retrieve_actions(project_id, action_id):
+def retrieve_action(project_id: int, action_id: int):
     project = project_service.get(project_id)
     if project:
         actions = project.actions
-        print(actions)
-        for action in actions:
-            if action_id == action.id:
-                res = action_schema.dump(action)
-                return res, 200
-            return {"message": "action do not exists"}, 401
+        if int(action_id) not in [_action.id for _action in actions]:
+            return {"message": "Action does not exists in project"}, 401 
+        else:
+            data = Action.query.get(int(action_id))
+            res = action_schema.dump(data)
+            return res, 200  
+    return {"message": "project does not exists"}, 401
 
-    return {"message": "project do not exists"}, 401
+
+@action.route("/projects/<project_id>/actions/<action_id>", methods = ["PUT"])
+def update_action(project_id: int, action_id: int):
+    req = request.get_json(force = True)
+    project = project_service.get(project_id)
+    if project:
+        actions = project.actions
+        for action in actions:
+            if int(action_id) not in [_action.id for _action in actions]:
+                return {"message": "Action does not exists in project"}, 401 
+        else:
+            try:
+                data = action_schema.load(req)
+                action_update = action_service.update(action_id, data)
+                res = action_schema.dump(action_update)
+                return res, 200
+            except ValidationError as err:
+                return err.messages, 400
+    return {"message": "project does not exists"}, 401
+
+@action.route("/projects/<project_id>/actions/<action_id>", methods = ["DELETE"])
+def delete_action(project_id: int, action_id: int):
+    project = project_service.get(project_id)
+    if project:
+        actions = project.actions
+        if int(action_id) not in [_action.id for _action in actions]:
+            return {"message": "Action does not exists in project"}, 401 
+        else:
+            res = action_service.delete(project_id, action_id)
+            return {"message":"Action successfully deleted"}, 200  
+    return {"message": "project does not exists"}, 401

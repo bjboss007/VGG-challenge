@@ -44,7 +44,7 @@ def update_project(id):
         data = project_schema.load(req)
         project = project_service.update(id, data )
         res = project_schema.dump(project)
-        return res, 201
+        return res, 200
     except ValidationError as err:
         return err.messages
     

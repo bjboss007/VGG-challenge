@@ -7,7 +7,7 @@ from challenge.models import Project
 
 class ProjectSchema(Schema):
     class Meta:
-        fields = ("id","name","description","completed")
+        fields = ("id","name","description","completed","_links")
         ordered = True
         
     name = fl.String(required= True, error_messages={
@@ -26,7 +26,13 @@ class ProjectSchema(Schema):
      
     completed  = fl.Boolean()
     
-    _links = ma.HyperlinkRelated
+    _links = ma.Hyperlinks(
+        {
+            "self": ma.URLFor("project.retrieve_one_project", id = '<id>'),
+            "collections": ma.URLFor("project.retrieve_all_project"),
+            "actions": ma.URLFor("action.retrieve_project_actions", project_id = '<id>')
+        }
+    )
     
 class ProjectPatchSchema(Schema):
     class Meta:
