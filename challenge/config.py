@@ -10,7 +10,7 @@ class Config():
 
 
 class Production(Config):
-    SECRETKEY = os.environ.get("secret_key")
-    SQLALCHEMY_DATABASE_URI = os.environ.get('database_uri')
+    SECRETKEY = 'eab3cbb80cc6459864c930ebd9d29dea'
+    SQLALCHEMY_DATABASE_URI = "postgres://svklzrvsnbcqqt:eb5fde5a027be5ea0059bb9d5bb328950e6d228010e9076fba3000d6631452dd@ec2-18-213-176-229.compute-1.amazonaws.com:5432/db66hh7reqtt87"
     DEBUG = False
     

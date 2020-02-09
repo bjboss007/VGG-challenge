@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_marshmallow import Marshmallow
-from challenge.config import Config
+from challenge.config import Config, Production
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 import cloudinary as Cloud
@@ -13,7 +13,7 @@ jwt = JWTManager()
 
 
 
-def create_app(config_class = Config):
+def create_app(config_class = Production):
     app = Flask(__name__)
     
     app.config.from_object(config_class)
