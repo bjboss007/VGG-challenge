@@ -49,7 +49,7 @@ class ProjectService:
             db.session.commit()
             return project, 200
         except Exception as err:
-            return "Data do not exits !", 400
+            return {"message" :"Data do not exits !"}, 400
             
     @staticmethod
     def get_all() -> List[Project]:
