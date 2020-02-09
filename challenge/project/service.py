@@ -2,7 +2,7 @@ from challenge import db
 from typing import List
 from .interface import ProjectInterface
 from challenge.models import Project
-from challenge import ApplicationException
+from challenge.utils import upload_file
 
 class ProjectService:
     
@@ -55,3 +55,13 @@ class ProjectService:
     def get_all() -> List[Project]:
         projects = Project.query.all()
         return projects
+    
+    
+    @staticmethod
+    def upload_image(id : int, data: ProjectInterface):
+        project = Project.query.get(id)
+        file_url = upload_file(data["user_stories"])
+        project.user_stories = file_url
+        db.session.commit()
+        
+        return project

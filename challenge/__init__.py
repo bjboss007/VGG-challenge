@@ -3,12 +3,15 @@ from flask_marshmallow import Marshmallow
 from challenge.config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+import cloudinary as Cloud
 from flask_jwt_extended import JWTManager
 
 db = SQLAlchemy()
 ma = Marshmallow()
 bcrypt = Bcrypt()
 jwt = JWTManager()
+
+
 
 def create_app(config_class = Config):
     app = Flask(__name__)

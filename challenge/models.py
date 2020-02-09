@@ -20,6 +20,7 @@ class Project(db.Model):
     description = db.Column(db.String, nullable = False)
     completed = db.Column(db.Boolean, nullable = False)
     actions = db.relationship('Action', backref = 'project', lazy = True)
+    user_stories = db.Column(db.String, nullable = True)
     
     def __repr__(self):
         return f"Project => [ '{self.name}' ]"

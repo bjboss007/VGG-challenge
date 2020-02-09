@@ -7,5 +7,6 @@ class ProjectInterface(TypedDict, total = False):
     name        : str
     description : str
     completed   : bool
+    user_stories: str
 
     
