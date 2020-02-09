@@ -56,6 +56,7 @@ def retrieve_actions(project_id, action_id):
     project = project_service.get(project_id)
     if project:
         actions = project.actions
+        print(actions)
         for action in actions:
             if action_id == action.id:
                 res = action_schema.dump(action)
