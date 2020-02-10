@@ -13,7 +13,7 @@ jwt = JWTManager()
 
 
 
-def create_app(config_class = Config):
+def create_app(config_class = Production):
     app = Flask(__name__)
     
     app.config.from_object(config_class)
