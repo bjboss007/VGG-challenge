@@ -31,4 +31,5 @@ def create_app(config_class = Production):
         app.register_blueprint(action)
         app.register_blueprint(user)
         
+        db.create_all()
         return app
