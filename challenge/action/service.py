@@ -24,9 +24,8 @@ class ActionService:
     @staticmethod
     def update(id: int, new_action: ActionInterface) -> Action:
         action = Action.query.get(id)
-        print(new_action["name"])
-        action.name = new_action["name"],
-        action.description = new_action["description"],
+        action.name = new_action["name"]
+        action.description = new_action["description"]
         action.note = new_action["note"] 
         
         db.session.commit()
