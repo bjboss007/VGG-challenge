@@ -1,13 +1,14 @@
 import cloudinary as Cloud
 import cloudinary.uploader as uploader
 import cloudinary.api
+import os
 
 
 Cloud.config(
     
-    cloud_name= 'habib007',
-    api_key= '529763968212671',
-    api_secret = '31HLIveDpLlDzvRmxD-l4iWVHxE'
+    cloud_name= os.environ.get('CLOUD_NAME'),
+    api_key= os.environ.get('API_KEY')
+    api_secret = os.environ.get('API_SECRET')
 )
 
 def upload_file(filename: str):
